@@ -10,13 +10,13 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  metadataBase: new URL('https://asencx.com'), // luego lo cambias
+  metadataBase: new URL('https://asencx.vercel.app'),
   openGraph: {
-    title: `${siteConfig.name} | Sistemas web profesionales`,
-    description: siteConfig.description,
-    url: 'https://asencx.com',
-    siteName: siteConfig.name,
-    type: 'website',
+   title: `${siteConfig.name} | Soluciones para Negocios`,
+   description: siteConfig.description,
+   url: 'https://asencx.vercel.app',
+   siteName: siteConfig.name,
+   type: 'website',
   },
   robots: {
     index: true,
