@@ -1,10 +1,9 @@
 export const siteConfig = {
   name: 'AsencX',
   author: 'Brayan',
-  description:
-    'Desarrollo de sistemas web profesionales para restaurantes, tiendas y negocios.',
+  description: 'Soluciones web a medida para negocios: ventas, inventario y supervisión.',
   links: {
-    whatsappNumber: '51903389999', // SOLO números. Ej: 51987654321
+    whatsappNumber: '51903389999', 
     email: 'asencx.dev@gmail.com',
   },
 };
