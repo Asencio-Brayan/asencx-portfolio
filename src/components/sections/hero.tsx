@@ -1,45 +1,32 @@
-'use client';
-
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { siteConfig } from '@/lib/constants/site';
 
-export function Hero() {
+export function HeroSection() {
   return (
-    <section className="py-16 sm:py-20">
+    <section className="py-20">
       <div className="mx-auto max-w-7xl px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="max-w-2xl"
-        >
-          <div className="flex flex-wrap gap-2">
-            <Badge variant="secondary">Restaurantes</Badge>
-            <Badge variant="secondary">Tiendas</Badge>
-            <Badge variant="secondary">Paneles admin</Badge>
-          </div>
-
-          <h1 className="mt-5 text-4xl font-bold tracking-tight sm:text-5xl">
-            Sistemas web profesionales para tu negocio
+        <div className="max-w-3xl">
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+            Sistemas web a medida para negocios que quieren crecer
           </h1>
 
-          <p className="mt-4 text-base text-muted-foreground sm:text-lg">
-            Construimos software moderno para ventas, inventario y supervisión.
-            Enfocado en rendimiento, UX y escalabilidad.
+          <p className="mt-4 text-lg text-muted-foreground">
+            Diseñamos y desarrollamos soluciones digitales adaptadas a los procesos
+            y necesidades reales de cada empresa. No sistemas genéricos,
+            sino herramientas hechas para tu forma de trabajar.
           </p>
 
-          <div className="mt-7 flex flex-wrap gap-3">
-            <Button asChild>
-              <Link href="#sistemas">Ver sistemas</Link>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <Button asChild size="lg">
+              <Link href="#contacto">Cotizar sistema</Link>
             </Button>
 
-            <Button asChild variant="outline">
-              <Link href="#contacto">Cotizar</Link>
+            <Button asChild size="lg" variant="outline">
+              <Link href="#sistemas">Ver sistemas</Link>
             </Button>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
