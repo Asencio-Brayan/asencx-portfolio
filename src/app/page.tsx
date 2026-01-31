@@ -5,6 +5,7 @@ import { ServicesSection } from '@/components/sections/services';
 import { ContactSection } from '@/components/sections/contact';
 import { BenefitsSection } from '@/components/sections/benefits';
 import { SocialProofSection } from '@/components/sections/social-proof';
+import { FinalCTASection } from '@/components/sections/final-cta';
 
 export default function HomePage() {
   return (
@@ -17,7 +18,7 @@ export default function HomePage() {
 
       {/* Social Proof */}
       <SocialProofSection />
-      
+
       {/* Sistemas */}
       <SystemsSection />
 
@@ -26,6 +27,9 @@ export default function HomePage() {
 
       {/* Servicios */}
       <ServicesSection />
+      
+      {/* Final CTA */}
+      <FinalCTASection />
 
       {/* Contacto */}
       <ContactSection />
