@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import Image from 'next/image';
+
 import { systems } from '@/content/systems';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -28,6 +30,23 @@ export default async function ProjectDetailPage({
     );
   }
 
+  const whatsappText = `Hola 👋
+Vi el sistema "${item.name}" en ${siteConfig.name} y quiero cotizar una solución adaptada a mi negocio.
+
+Para ayudarte mejor, ¿me compartes estos datos?
+
+1) Nombre:
+2) Empresa (opcional):
+3) Rubro (tienda / restaurante / otro):
+4) Necesidades (ventas, inventario, caja, reportes, etc.):
+5) Cantidad de usuarios:
+6) Ciudad / País:
+7) ¿Tienes procesos definidos? (sí/no)
+8) Presupuesto aproximado (opcional):
+9) Fecha ideal (opcional):
+
+Gracias 🙌`;
+
   return (
     <main className="mx-auto max-w-7xl px-4 py-16">
       <div className="flex flex-col gap-3">
@@ -45,6 +64,7 @@ export default async function ProjectDetailPage({
 
       <div className="mt-10 grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
+          {/* Funcionalidades */}
           <Card>
             <CardHeader>
               <CardTitle>Funcionalidades</CardTitle>
@@ -58,22 +78,66 @@ export default async function ProjectDetailPage({
             </CardContent>
           </Card>
 
+          {/* Vista previa (Screenshots) */}
           <Card className="mt-6">
             <CardHeader>
               <CardTitle>Vista previa</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="aspect-video rounded-lg border bg-muted" />
-                <div className="aspect-video rounded-lg border bg-muted" />
-              </div>
-              <p className="mt-3 text-sm text-muted-foreground">
-                (Aquí pondremos capturas reales o un demo embebido después.)
-              </p>
+              {item.screenshots?.length ? (
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {item.screenshots.map((src) => (
+                    <div
+                      key={src}
+                      className="overflow-hidden rounded-lg border bg-muted"
+                    >
+                      <div className="relative aspect-video">
+                        <Image
+                          src={src}
+                          alt={`Vista previa - ${item.name}`}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 640px) 100vw, 50vw"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-muted-foreground">
+                  Próximamente añadiremos capturas reales del sistema.
+                </p>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Módulos */}
+          <Card className="mt-6">
+            <CardHeader>
+              <CardTitle>Módulos</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {item.modules?.length ? (
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {item.modules.map((m) => (
+                    <div key={m.title} className="rounded-lg border p-4">
+                      <p className="font-medium">{m.title}</p>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {m.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-muted-foreground">
+                  Este sistema puede incluir módulos según tus necesidades.
+                </p>
+              )}
             </CardContent>
           </Card>
         </div>
 
+        {/* CTA */}
         <div>
           <Card className="sticky top-6">
             <CardHeader>
@@ -81,16 +145,17 @@ export default async function ProjectDetailPage({
             </CardHeader>
             <CardContent className="space-y-3">
               <p className="text-sm text-muted-foreground">
-                Lo adaptamos a tu negocio: logo, flujo, reportes, usuarios, permisos y más.
+                Lo adaptamos a tu negocio: logo, flujo, reportes, usuarios,
+                permisos y más.
               </p>
 
               <Button asChild className="w-full">
                 <a
-                  href={`https://wa.me/${siteConfig.links.whatsappNumber}?text=${encodeURIComponent(
-                   `Hola, vi el sistema "${item.name}" en AsencX y quiero cotizar una solución adaptada a mi negocio.\n\nNegocio:\nNecesidades:\nUsuarios:\n\nGracias.`
-                  )}`}
+                  href={`https://wa.me/${
+                    siteConfig.links.whatsappNumber
+                  }?text=${encodeURIComponent(whatsappText)}`}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                 >
                   Cotizar por WhatsApp
                 </a>
@@ -103,6 +168,8 @@ export default async function ProjectDetailPage({
           </Card>
         </div>
       </div>
+
+      {/* Contacto con contexto */}
       <ContactSection context={item.name} />
     </main>
   );
