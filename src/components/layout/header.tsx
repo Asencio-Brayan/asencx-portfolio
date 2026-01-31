@@ -14,7 +14,10 @@ import {
 } from '@/components/ui/sheet';
 import { siteConfig } from '@/lib/constants/site';
 
-type NavItem = { label: string; hash: `#${string}` };
+type NavItem = {
+  label: string;
+  hash: `#${string}`;
+};
 
 const navItems: NavItem[] = [
   { label: 'Sistemas', hash: '#sistemas' },
@@ -26,19 +29,20 @@ const navItems: NavItem[] = [
 export function Header() {
   const pathname = usePathname();
 
-  // Home => solo #hash. Otras rutas => /#hash
-  const hrefFor = (hash: NavItem['hash']) => (pathname === '/' ? hash : `/${hash}`);
+  // Si estás en home usa #hash, si no /#hash
+  const hrefFor = (hash: NavItem['hash']) =>
+    pathname === '/' ? hash : `/${hash}`;
 
   return (
     <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
-        {/* Brand */}
-        <Link href="/" className="flex items-center gap-2 font-semibold">
-          <span className="text-base">{siteConfig.name}</span>
+        {/* LOGO */}
+        <Link href="/" className="font-semibold text-base">
+          {siteConfig.name}
         </Link>
 
-        {/* Desktop nav (solo en pantallas grandes para que no se amontone) */}
-        <nav className="hidden items-center gap-8 lg:flex">
+        {/* ================= DESKTOP ================= */}
+        <nav className="hidden lg:flex items-center gap-8">
           {navItems.map((item) => (
             <Link
               key={item.hash}
@@ -49,12 +53,12 @@ export function Header() {
             </Link>
           ))}
 
-          <Button asChild size="sm" className="shrink-0">
+          <Button asChild size="sm">
             <Link href={hrefFor('#contacto')}>Contactar</Link>
           </Button>
         </nav>
 
-        {/* Mobile nav (hasta lg) */}
+        {/* ================= MOBILE / TABLET ================= */}
         <div className="lg:hidden">
           <Sheet>
             <SheetTrigger asChild>
@@ -63,17 +67,17 @@ export function Header() {
               </Button>
             </SheetTrigger>
 
-            <SheetContent side="right" className="w-[320px]">
+            <SheetContent side="right" className="w-75git add .">
               <SheetHeader>
                 <SheetTitle>{siteConfig.name}</SheetTitle>
               </SheetHeader>
 
-              <div className="mt-6 flex flex-col gap-2">
+              <div className="mt-6 flex flex-col gap-3">
                 {navItems.map((item) => (
                   <Link
                     key={item.hash}
                     href={hrefFor(item.hash)}
-                    className="rounded-md px-2 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
+                    className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
                   >
                     {item.label}
                   </Link>
