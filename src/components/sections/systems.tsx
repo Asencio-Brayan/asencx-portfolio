@@ -11,7 +11,8 @@ export function SystemsSection() {
         <div className="max-w-2xl">
           <h2 className="text-2xl font-bold">Sistemas</h2>
           <p className="mt-2 text-muted-foreground">
-            Demos y módulos listos para adaptar a tu negocio. Diseño limpio, rápido y escalable.
+            Soluciones base que adaptamos completamente a los procesos y necesidades de tu negocio.
+            Partimos de módulos probados y los ajustamos a tu forma real de trabajar.
           </p>
         </div>
 

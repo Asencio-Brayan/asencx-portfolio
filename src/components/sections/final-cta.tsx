@@ -38,10 +38,13 @@ Gracias.`;
               </a>
             </Button>
 
-            <Button asChild size="lg" variant="outline">
-              <a href={`mailto:${siteConfig.links.email}`}>
-                Contactar por correo
-              </a>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground hover:text-primary"
+            >
+             <a href={`mailto:${siteConfig.links.email}`}>Contactar por correo</a>
             </Button>
           </div>
         </div>
