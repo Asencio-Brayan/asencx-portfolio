@@ -21,7 +21,7 @@ const steps = [
 
 export function ProcessSection() {
   return (
-    <section id="como-trabajamos" className="py-16">
+    <section id="como-trabajamos" className="py-16 bg-muted/50">
       <div className="mx-auto max-w-7xl px-4">
         <div className="max-w-2xl">
           <h2 className="text-2xl font-bold">Cómo trabajamos</h2>

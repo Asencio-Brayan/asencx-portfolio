@@ -31,7 +31,7 @@ const deliverables = [
 
 export function SocialProofSection() {
   return (
-    <section className="py-16">
+    <section className="py-16 bg-muted/50">
       <div className="mx-auto max-w-7xl px-4">
         <div className="max-w-2xl">
           <h2 className="text-2xl font-bold">Ideal para</h2>
