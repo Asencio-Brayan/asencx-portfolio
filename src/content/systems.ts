@@ -22,8 +22,8 @@ export const systems: SystemItem[] = [
       'Reportes de ventas',
     ],
     screenshots: [
-       '/projects/restaurante-pos/1.png',
-     ],
+     '/projects/restaurante-pos/1.png',
+    ],
     modules: [
       {
         title: 'Pedidos y Mesas',
@@ -57,7 +57,7 @@ export const systems: SystemItem[] = [
       'Alertas de stock mínimo',
     ],
     screenshots: [
-       '/projects/tienda-inventario/1.png',
+     '/projects/tienda-inventario/1.png',
        
     ],
     modules: [
@@ -93,7 +93,7 @@ export const systems: SystemItem[] = [
       'Panel centralizado',
     ],
     screenshots: [
-       '/projects/panel-supervisor/1.png',
+     '/projects/panel-supervisor/1.png',
        
     ],
     modules: [
