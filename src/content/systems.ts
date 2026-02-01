@@ -21,10 +21,9 @@ export const systems: SystemItem[] = [
       'Productos y combos',
       'Reportes de ventas',
     ],
-    // screenshots: [
-    //   '/projects/restaurante-pos/1.png',
-    //   '/projects/restaurante-pos/2.png',
-    // ],
+    screenshots: [
+       '/projects/restaurante-pos/1.png',
+     ],
     modules: [
       {
         title: 'Pedidos y Mesas',
@@ -57,10 +56,10 @@ export const systems: SystemItem[] = [
       'Ventas y clientes',
       'Alertas de stock mínimo',
     ],
-    // screenshots: [
-    //   '/projects/tienda-inventario/1.png',
-    //   '/projects/tienda-inventario/2.png',
-    // ],
+    screenshots: [
+       '/projects/tienda-inventario/1.png',
+       
+    ],
     modules: [
       {
         title: 'Inventario',
@@ -93,10 +92,10 @@ export const systems: SystemItem[] = [
       'Alertas y métricas clave',
       'Panel centralizado',
     ],
-    // screenshots: [
-    //   '/projects/panel-supervisor/1.png',
-    //   '/projects/panel-supervisor/2.png',
-    // ],
+    screenshots: [
+       '/projects/panel-supervisor/1.png',
+       
+    ],
     modules: [
       {
         title: 'Dashboard',
