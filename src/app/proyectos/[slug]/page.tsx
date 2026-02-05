@@ -2,7 +2,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
 import { PROJECTS } from "@/content/systems";
 import {
   Card,
@@ -27,7 +26,7 @@ export async function generateMetadata({ params }: { params: ParamsPromise }) {
   if (!data) return {};
   return {
     title: `${data.title} | AsencX`,
-    description: data.subtitle,
+    description: data.subtitle ?? data.title,
   };
 }
 

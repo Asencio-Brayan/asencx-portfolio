@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { systems } from '@/content/systems';
+import { SYSTEMS } from "@/content/systems";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -17,7 +17,7 @@ export function SystemsSection() {
         </div>
 
         <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {systems.map((item) => (
+          {SYSTEMS.map((item) => (
             <Card key={item.slug} className="flex flex-col">
               <CardHeader>
                 <CardTitle className="text-lg">{item.name}</CardTitle>
@@ -27,7 +27,7 @@ export function SystemsSection() {
                 <p className="text-sm text-muted-foreground">{item.summary}</p>
 
                 <div className="flex flex-wrap gap-2">
-                  {item.tags.map((t) => (
+                  {(item.tags ?? []).map((t) => (
                     <Badge key={t} variant="secondary">
                       {t}
                     </Badge>
