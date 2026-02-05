@@ -1,5 +1,6 @@
 // src/app/page.tsx
 import Image from "next/image";
+import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -36,6 +37,9 @@ const mail = (body: string) =>
     EMAIL_SUBJECT
   )}&body=${encodeURIComponent(body)}`;
 
+// Si tienes Calendly/Google Calendar, ponlo aquí. Si no, lo mandamos a WhatsApp.
+const CALL_URL = wa("Hola AsencX, quiero agendar una llamada para cotizar un sistema.");
+
 const featuresChips = [
   { icon: <Check className="h-4 w-4" />, label: "Caja rápida" },
   { icon: <Check className="h-4 w-4" />, label: "Control de stock" },
@@ -58,11 +62,7 @@ const systems = [
   {
     title: "Inventario",
     desc: "Entradas/salidas, alertas, kardex y control por almacén.",
-    bullets: [
-      "Stock mínimo y alertas",
-      "Importación de productos",
-      "Historial y auditoría",
-    ],
+    bullets: ["Stock mínimo y alertas", "Importación de productos", "Historial y auditoría"],
     icon: <Boxes className="h-5 w-5" />,
     href: "/proyectos/tienda-inventario",
     image: "/projets/tienda-Inventario/1.1.png",
@@ -85,11 +85,7 @@ const audiences = [
     title: "Restaurantes",
     text: "Comandas, caja ágil y control de insumos.",
   },
-  {
-    icon: <Store className="h-5 w-5" />,
-    title: "Tiendas",
-    text: "Stock, ventas y reportes claros para decidir.",
-  },
+  { icon: <Store className="h-5 w-5" />, title: "Tiendas", text: "Stock, ventas y reportes claros para decidir." },
   {
     icon: <ShoppingBag className="h-5 w-5" />,
     title: "Bodegas",
@@ -98,16 +94,8 @@ const audiences = [
 ];
 
 const process = [
-  {
-    icon: <Rocket className="h-5 w-5" />,
-    title: "1) Diagnóstico",
-    text: "Te hago 10 preguntas y defino módulos.",
-  },
-  {
-    icon: <Clock className="h-5 w-5" />,
-    title: "2) Propuesta + plan",
-    text: "Precio por módulos + cronograma real.",
-  },
+  { icon: <Rocket className="h-5 w-5" />, title: "1) Diagnóstico", text: "Te hago 10 preguntas y defino módulos." },
+  { icon: <Clock className="h-5 w-5" />, title: "2) Propuesta + plan", text: "Precio por módulos + cronograma real." },
   {
     icon: <Headphones className="h-5 w-5" />,
     title: "3) Implementación",
@@ -170,8 +158,6 @@ function Screenshot({
 export default function Page() {
   return (
     <main className="min-h-screen bg-background text-foreground">
-      {/* NOTA: NO ponemos <header> ni <footer> aquí porque ya están en layout.tsx */}
-
       {/* HERO */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10">
@@ -194,14 +180,18 @@ export default function Page() {
             </p>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              {/* ✅ Acción: baja a contacto */}
+              {/* Cotizar ahora -> WhatsApp */}
               <Button size="lg" className="rounded-2xl" asChild>
-                <a href="#contacto">
+                <a
+                  href={wa("Hola AsencX, quiero cotizar un sistema (POS / Inventario / Supervisor).")}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Cotizar ahora <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
 
-              {/* ✅ Acción: baja a sistemas */}
+              {/* Ver sistemas -> scroll a #sistemas */}
               <Button size="lg" variant="outline" className="rounded-2xl" asChild>
                 <a href="#sistemas">Ver sistemas</a>
               </Button>
@@ -265,7 +255,7 @@ export default function Page() {
               <p className="mt-2 text-muted-foreground">Menos vueltas, más control. Elige lo que necesitas.</p>
             </div>
 
-            {/* ✅ Acción: baja a sistemas (ejemplos) */}
+            {/* Ver ejemplos -> scroll a #sistemas */}
             <Button variant="outline" className="rounded-2xl" asChild>
               <a href="#sistemas">Ver ejemplos</a>
             </Button>
@@ -295,10 +285,10 @@ export default function Page() {
             <p className="mt-2 text-muted-foreground">Cada módulo se integra y escala contigo.</p>
           </div>
 
-          {/* ✅ Acción: WhatsApp */}
+          {/* Cotizar módulos -> WhatsApp */}
           <Button className="rounded-2xl" asChild>
             <a
-              href={wa("Hola AsencX, quiero cotizar un sistema por módulos (POS/Inventario/Supervisor).")}
+              href={wa("Hola AsencX, quiero cotizar módulos (POS / Inventario / Supervisor).")}
               target="_blank"
               rel="noreferrer"
             >
@@ -341,13 +331,13 @@ export default function Page() {
 
                 <div className="mt-5 flex items-center gap-2">
                   <Button variant="outline" className="w-full rounded-2xl" asChild>
-                    <a href={s.href}>Ver detalles</a>
+                    <Link href={s.href}>Ver detalles</Link>
                   </Button>
 
-                  {/* ✅ Acción: WhatsApp con sistema específico */}
+                  {/* Cotizar (por sistema) -> WhatsApp */}
                   <Button className="w-full rounded-2xl" asChild>
                     <a
-                      href={wa(`Hola AsencX, quiero cotizar el ${s.title}. ¿Me das info y precio?`)}
+                      href={wa(`Hola AsencX, quiero cotizar el sistema: ${s.title}.`)}
                       target="_blank"
                       rel="noreferrer"
                     >
@@ -394,8 +384,7 @@ export default function Page() {
       </section>
 
       {/* PROCESS */}
-      {/* ✅ antes era id="proceso", ahora lo alineamos con el header: #como-trabajamos */}
-      <section id="como-trabajamos" className="border-y bg-muted/30">
+      <section id="proceso" className="border-y bg-muted/30">
         <div className="mx-auto max-w-6xl px-4 py-14">
           <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
             <div>
@@ -403,13 +392,9 @@ export default function Page() {
               <p className="mt-2 text-muted-foreground">Para avanzar rápido sin improvisar.</p>
             </div>
 
-            {/* ✅ Acción: WhatsApp para llamada */}
+            {/* Agendar llamada -> WhatsApp (o Calendly si cambias CALL_URL) */}
             <Button variant="outline" className="rounded-2xl" asChild>
-              <a
-                href={wa("Hola AsencX, quiero agendar una llamada para cotizar. ¿Qué horarios tienes?")}
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href={CALL_URL} target="_blank" rel="noreferrer">
                 Agendar llamada
               </a>
             </Button>
@@ -460,12 +445,10 @@ export default function Page() {
             </p>
 
             <div className="mt-6 grid gap-3">
-              {/* ✅ Acción WhatsApp */}
+              {/* Cotizar por WhatsApp */}
               <Button size="lg" className="rounded-2xl" asChild>
                 <a
-                  href={wa(
-                    "Hola AsencX, quiero cotizar un sistema. Rubro: _____. Necesito: POS/Inventario/Supervisor. Cajas/usuarios: _____."
-                  )}
+                  href={wa("Hola AsencX, quiero cotizar. Rubro: ____. Necesito: ____")}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -473,11 +456,11 @@ export default function Page() {
                 </a>
               </Button>
 
-              {/* ✅ Acción correo */}
+              {/* Enviar mensaje por correo */}
               <Button size="lg" variant="outline" className="rounded-2xl" asChild>
                 <a
                   href={mail(
-                    "Hola AsencX,\n\nQuiero una cotización.\nRubro: \nNecesito: POS / Inventario / Supervisor\nCajas/usuarios: \nSucursales: \n\nGracias."
+                    "Hola AsencX,\n\nQuiero cotizar un sistema.\n\nRubro:\nMódulos:\nUsuarios/Cajas:\nSucursales:\nNotas:\n"
                   )}
                 >
                   Enviar mensaje por correo
@@ -527,8 +510,6 @@ export default function Page() {
           </Card>
         </div>
       </section>
-
-      {/* NOTA: footer también lo dejas en layout.tsx. Si quieres uno aquí, dime y lo armamos único (sin duplicar). */}
     </main>
   );
 }
