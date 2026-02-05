@@ -1,11 +1,5 @@
 // src/content/systems.ts
 
-export type ProjectImage = {
-  heroSrc: string;   // imagen grande (vista previa)
-  cardSrc: string;   // imagen para tarjeta (home)
-  alt: string;
-};
-
 export type ProjectModule = {
   title: string;
   description: string;
@@ -15,15 +9,17 @@ export type Project = {
   slug: string;
   title: string;
   subtitle: string;
+  description: string;
 
-  // Opcionales, pero en el page.tsx hacemos fallback con ?? []
   tags?: string[];
   funcionalidades?: string[];
   modules?: ProjectModule[];
 
-  image: ProjectImage;
+  image: {
+    src: string; // ruta dentro de /public
+    alt: string;
+  };
 
-  // Para CTA
   whatsappText?: string;
 };
 
@@ -32,6 +28,8 @@ export const PROJECTS: Record<string, Project> = {
     slug: "restaurante-pos",
     title: "Sistema Restaurante (POS)",
     subtitle: "Pedidos, mesas, caja, cocina, reportes y control de ventas.",
+    description:
+      "Demo visual para capturas. Incluye los módulos más comunes en un flujo cocina–caja y reportes.",
     tags: ["POS", "Cocina", "Caja", "Reportes"],
     funcionalidades: [
       "Gestión de mesas y pedidos",
@@ -59,76 +57,87 @@ export const PROJECTS: Record<string, Project> = {
       },
     ],
     image: {
-      heroSrc: "/projets/restaurante-pos/1.2.png",
-      cardSrc: "/projets/restaurante-pos/1.2.png",
-      alt: "Sistema Restaurante (POS) - demo",
+      src: "/projets/restaurante-pos/1.2.png",
+      alt: "Vista previa - Sistema Restaurante (POS)",
     },
-    whatsappText: "Hola AsencX, quiero cotizar el Sistema Restaurante (POS).",
+    whatsappText:
+      "Hola AsencX, quiero cotizar el Sistema Restaurante (POS). ¿Me ayudas con una propuesta por módulos?",
   },
 
   "tienda-inventario": {
     slug: "tienda-inventario",
-    title: "Inventario",
+    title: "Inventario (Demo)",
     subtitle: "Entradas/salidas, alertas, kardex y control por almacén.",
-    tags: ["Inventario", "Alertas", "Kardex"],
-    funcionalidades: ["Stock mínimo y alertas", "Importación de productos", "Historial y auditoría"],
+    description:
+      "Demo visual para capturas. Control de stock, alertas y trazabilidad básica.",
+    tags: ["Inventario", "Kardex", "Alertas"],
+    funcionalidades: [
+      "Stock mínimo y alertas",
+      "Importación de productos",
+      "Historial y auditoría",
+    ],
     modules: [
-      { title: "Movimientos", description: "Entradas/salidas con historial y control por almacén." },
-      { title: "Alertas", description: "Stock mínimo, productos críticos y avisos." },
-      { title: "Kardex", description: "Historial y auditoría de movimientos." },
+      {
+        title: "Productos",
+        description: "Listado, SKU, categorías y búsqueda rápida.",
+      },
+      {
+        title: "Movimientos",
+        description: "Entradas / salidas por compra, ajuste o venta.",
+      },
+      {
+        title: "Alertas",
+        description: "Aviso de stock bajo por mínimo configurable.",
+      },
+      {
+        title: "Kardex",
+        description: "Historial de movimientos con trazabilidad básica.",
+      },
     ],
     image: {
-      heroSrc: "/projets/tienda-Inventario/1.1.png",
-      cardSrc: "/projets/tienda-Inventario/1.1.png",
-      alt: "Inventario - demo",
+      // OJO: respeta MAYÚSCULAS si tu carpeta es "tienda-Inventario"
+      src: "/projets/tienda-Inventario/1.1.png",
+      alt: "Vista previa - Inventario (Demo)",
     },
-    whatsappText: "Hola AsencX, quiero cotizar el módulo de Inventario.",
+    whatsappText:
+      "Hola AsencX, quiero cotizar el módulo de Inventario. ¿Me pasas precio y tiempos?",
   },
 
   "panel-supervisor": {
     slug: "panel-supervisor",
-    title: "Panel Supervisor",
-    subtitle: "KPIs, ventas por día, productos top y control general.",
-    tags: ["KPIs", "Reportes", "Sucursal"],
-    funcionalidades: ["KPIs en tiempo real", "Filtros por fecha/sucursal", "Exportación"],
+    title: "Panel Supervisor (Demo)",
+    subtitle: "KPIs, ventas por día, productos top y alertas.",
+    description:
+      "Demo visual para capturas. Dashboard con métricas, ranking y tabla de ventas.",
+    tags: ["KPIs", "Ventas", "Alertas"],
+    funcionalidades: [
+      "KPIs en tiempo real",
+      "Filtros por fecha/sucursal",
+      "Exportación",
+    ],
     modules: [
-      { title: "Dashboard", description: "KPIs y métricas rápidas para decisiones." },
-      { title: "Ventas", description: "Ventas por día y por hora (visual)." },
-      { title: "Alertas", description: "Productos críticos y notificaciones (demo visual)." },
+      {
+        title: "Dashboard",
+        description: "KPIs, tickets, ticket promedio y medios de pago.",
+      },
+      {
+        title: "Ranking de productos",
+        description: "Top productos del día y tendencias.",
+      },
+      {
+        title: "Alertas",
+        description: "Stock bajo y productos destacados (demo).",
+      },
+      {
+        title: "Reportes",
+        description: "Ventas por hora/día y exportación (demo).",
+      },
     ],
     image: {
-      heroSrc: "/projets/panel-supervisor/1.png",
-      cardSrc: "/projets/panel-supervisor/1.png",
-      alt: "Panel Supervisor - demo",
+      src: "/projets/panel-supervisor/1.png",
+      alt: "Vista previa - Panel Supervisor (Demo)",
     },
-    whatsappText: "Hola AsencX, quiero cotizar el Panel Supervisor.",
+    whatsappText:
+      "Hola AsencX, quiero cotizar el Panel Supervisor (dashboard de ventas). ¿Me pasas propuesta?",
   },
 };
-
-// ✅ Esto lo usa tu sección (si tienes src/components/sections/systems.tsx importando { systems })
-export const systems = [
-  {
-    title: "Sistema POS",
-    desc: "Venta, cobro, tickets y cierre de caja sin estrés.",
-    bullets: ["Caja y cierre en minutos", "Tickets / boletas", "Usuarios por rol"],
-    href: "/proyectos/restaurante-pos",
-    image: "/projets/restaurante-pos/1.2.png",
-    imageAlt: "POS demo",
-  },
-  {
-    title: "Inventario",
-    desc: "Entradas/salidas, alertas, kardex y control por almacén.",
-    bullets: ["Stock mínimo y alertas", "Importación de productos", "Historial y auditoría"],
-    href: "/proyectos/tienda-inventario",
-    image: "/projets/tienda-Inventario/1.1.png",
-    imageAlt: "Inventario demo",
-  },
-  {
-    title: "Panel Supervisor",
-    desc: "Indicadores, ventas por día, productos top y control general.",
-    bullets: ["KPIs en tiempo real", "Filtros por fecha/sucursal", "Exportación"],
-    href: "/proyectos/panel-supervisor",
-    image: "/projets/panel-supervisor/1.png",
-    imageAlt: "Panel supervisor demo",
-  },
-];
