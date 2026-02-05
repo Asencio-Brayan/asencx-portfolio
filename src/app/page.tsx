@@ -65,7 +65,7 @@ const systems = [
     bullets: ["Stock mínimo y alertas", "Importación de productos", "Historial y auditoría"],
     icon: <Boxes className="h-5 w-5" />,
     href: "/proyectos/tienda-inventario",
-    image: "/projets/tienda-Inventario/1.1.png",
+    image: "/projets/tienda-inventario/1.1.png",
     imageAlt: "Inventario demo",
   },
   {
@@ -239,7 +239,7 @@ export default function Page() {
               heightClass="h-[320px]"
             />
             <div className="grid gap-4 sm:grid-cols-2">
-              <Screenshot src="/projets/tienda-Inventario/1.1.png" alt="Inventario demo" label="Inventario" />
+              <Screenshot src="/projets/tienda-inventario/1.1.png" alt="Inventario demo" label="Inventario" />
               <Screenshot src="/projets/panel-supervisor/1.png" alt="Panel supervisor demo" label="Supervisor" />
             </div>
           </div>
