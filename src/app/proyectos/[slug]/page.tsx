@@ -1,4 +1,5 @@
 // src/app/proyectos/[slug]/page.tsx
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -20,13 +21,70 @@ const wa = (text: string) => WHATSAPP_BASE + encodeURIComponent(text);
 
 type ParamsPromise = Promise<{ slug: string }>;
 
-export async function generateMetadata({ params }: { params: ParamsPromise }) {
+// ✅ SEO completo por proyecto (no cambia tu diseño)
+export async function generateMetadata({
+  params,
+}: {
+  params: ParamsPromise;
+}): Promise<Metadata> {
   const { slug } = await params;
   const data = PROJECTS[slug];
-  if (!data) return {};
+
+  const base = "https://asencx.com";
+
+  // Si no existe el slug, metadata básica
+  if (!data) {
+    return {
+      metadataBase: new URL(base),
+      title: "Proyectos | AsencX",
+      description:
+        "Sistemas a medida: POS, inventario, reportes y panel supervisor para negocios.",
+    };
+  }
+
+  const title = `${data.title} | AsencX`;
+  const description = data.subtitle ?? data.short ?? data.title;
+
+  const keywords = [
+    "AsencX",
+    "sistemas para negocios",
+    "sistema POS",
+    "sistema de inventario",
+    "panel supervisor",
+    "software para restaurantes",
+    "software para tiendas",
+    ...(data.tags ?? []),
+    ...(data.funcionalidades ?? []),
+  ];
+
+  const imageUrl = data.image?.src ? `${base}${data.image.src}` : undefined;
+  const url = `${base}/proyectos/${data.slug}`;
+
   return {
-    title: `${data.title} | AsencX`,
-    description: data.subtitle ?? data.title,
+    metadataBase: new URL(base),
+    title,
+    description,
+    keywords,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "AsencX",
+      images: imageUrl
+        ? [{ url: imageUrl, width: 1200, height: 630, alt: data.image.alt }]
+        : [],
+      type: "website",
+      locale: "es_ES",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: imageUrl ? [imageUrl] : [],
+    },
   };
 }
 
@@ -134,10 +192,7 @@ export default async function ProyectoPage({
                 </CardHeader>
                 <CardContent className="grid gap-4 md:grid-cols-2">
                   {modules.map((m) => (
-                    <div
-                      key={m.title}
-                      className="rounded-2xl border p-4"
-                    >
+                    <div key={m.title} className="rounded-2xl border p-4">
                       <div className="font-semibold">{m.title}</div>
                       <div className="mt-1 text-sm text-muted-foreground">
                         {m.description}
