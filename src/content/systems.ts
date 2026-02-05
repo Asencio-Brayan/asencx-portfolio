@@ -141,3 +141,6 @@ export const PROJECTS: Record<string, Project> = {
       "Hola AsencX, quiero cotizar el Panel Supervisor (dashboard de ventas). ¿Me pasas propuesta?",
   },
 };
+export const systems = [
+  // ...tus sistemas
+];
