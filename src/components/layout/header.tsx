@@ -11,17 +11,18 @@ const WHATSAPP_URL =
   "https://wa.me/51903389999?text=Hola%20AsencX%2C%20quiero%20cotizar%20un%20sistema";
 
 const nav = [
-  { label: "Sistemas", href: "#sistemas" },
-  { label: "Cómo trabajamos", href: "#como-trabajamos" },
-  { label: "Servicios", href: "#servicios" },
-  { label: "Contacto", href: "#contacto" },
+  { label: "Sistemas", href: "/#sistemas" },
+  { label: "Cómo trabajamos", href: "/#proceso" }, // <- porque tu sección se llama proceso
+  { label: "Servicios", href: "/#servicios" },     // <- vamos a crear esta sección en la home
+  { label: "Contacto", href: "/#contacto" },
 ];
 
+
 export default function Header() {
-  const [hash, setHash] = useState<string>("");
+  const [active, setActive] = useState<string>("");
 
   useEffect(() => {
-    const onHash = () => setHash(window.location.hash || "");
+    const onHash = () => setActive(window.location.hash || "");
     onHash();
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
@@ -34,26 +35,33 @@ export default function Header() {
           <div className="h-9 w-9 rounded-xl bg-foreground" />
           <div>
             <div className="text-sm font-semibold leading-none">AsencX</div>
-            <div className="text-xs text-muted-foreground">Sistemas para negocios</div>
+            <div className="text-xs text-muted-foreground">
+              Sistemas para negocios
+            </div>
           </div>
         </Link>
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-6 md:flex">
-          {nav.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className={
-                "text-sm transition-colors " +
-                (hash === item.href
-                  ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground")
-              }
-            >
-              {item.label}
-            </a>
-          ))}
+          {nav.map((item) => {
+            const hashOnly = item.href.replace("/#", "#"); // para comparar con window.location.hash
+            const isActive = active === hashOnly;
+
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                className={
+                  "text-sm transition-colors " +
+                  (isActive
+                    ? "text-foreground"
+                    : "text-muted-foreground hover:text-foreground")
+                }
+              >
+                {item.label}
+              </a>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -62,7 +70,7 @@ export default function Header() {
             className="hidden sm:inline-flex w-auto rounded-2xl"
             asChild
           >
-            <a href="#sistemas">Ver sistemas</a>
+            <a href="/#sistemas">Ver sistemas</a>
           </Button>
 
           <Button className="hidden sm:inline-flex w-auto rounded-2xl" asChild>
@@ -94,7 +102,8 @@ export default function Header() {
 
                   <Button className="mt-2 w-full rounded-2xl" asChild>
                     <a href={WHATSAPP_URL} target="_blank" rel="noreferrer">
-                      Contactar por WhatsApp <ArrowRight className="ml-2 h-4 w-4" />
+                      Cotizar por WhatsApp{" "}
+                      <ArrowRight className="ml-2 h-4 w-4" />
                     </a>
                   </Button>
                 </div>

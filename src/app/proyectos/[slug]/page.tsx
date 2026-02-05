@@ -1,176 +1,156 @@
-import Link from 'next/link';
-import Image from 'next/image';
+// src/app/proyectos/[slug]/page.tsx
+import Link from "next/link";
+import { notFound } from "next/navigation";
 
-import { systems } from '@/content/systems';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ContactSection } from '@/components/sections/contact';
-import { siteConfig } from '@/lib/constants/site';
+import { PROJECTS } from "@/content/systems";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Check, ArrowLeft } from "lucide-react";
 
-export default async function ProjectDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+type ParamsPromise = Promise<{ slug: string }>;
+
+export async function generateMetadata({ params }: { params: ParamsPromise }) {
   const { slug } = await params;
-  const item = systems.find((s) => s.slug === slug);
+  const data = PROJECTS[slug];
+  if (!data) return {};
 
-  if (!item) {
-    return (
-      <main className="mx-auto max-w-7xl px-4 py-16">
-        <h1 className="text-2xl font-bold">Proyecto no encontrado</h1>
-        <p className="mt-2 text-muted-foreground">
-          Slug recibido: <span className="font-mono">{slug}</span>
-        </p>
-        <Button asChild className="mt-6" variant="outline">
-          <Link href="/">Volver al inicio</Link>
-        </Button>
-      </main>
-    );
-  }
+  return {
+    title: `${data.title} | AsencX`,
+    description: data.subtitle ?? data.description,
+  };
+}
 
-  const whatsappText = `Hola 👋
-Vi el sistema "${item.name}" en ${siteConfig.name} y quiero cotizar una solución adaptada a mi negocio.
+export default async function ProyectoPage({ params }: { params: ParamsPromise }) {
+  const { slug } = await params;
+  const data = PROJECTS[slug];
 
-Para ayudarte mejor, ¿me compartes estos datos?
-
-1) Nombre:
-2) Empresa (opcional):
-3) Rubro (tienda / restaurante / otro):
-4) Necesidades (ventas, inventario, caja, reportes, etc.):
-5) Cantidad de usuarios:
-6) Ciudad / País:
-7) ¿Tienes procesos definidos? (sí/no)
-8) Presupuesto aproximado (opcional):
-9) Fecha ideal (opcional):
-
-Gracias 🙌`;
+  if (!data) return notFound();
 
   return (
-    <main className="mx-auto max-w-7xl px-4 py-16">
-      <div className="flex flex-col gap-3">
-        <h1 className="text-3xl font-bold">{item.name}</h1>
-        <p className="max-w-2xl text-muted-foreground">{item.summary}</p>
+    <main className="mx-auto max-w-6xl px-4 py-10">
+      {/* Top bar */}
+      <div className="mb-6 flex items-center justify-between gap-3">
+        <Button asChild variant="outline" className="rounded-2xl">
+          <Link href="/#sistemas">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Volver
+          </Link>
+        </Button>
 
-        <div className="flex flex-wrap gap-2">
-          {item.tags.map((t) => (
-            <Badge key={t} variant="secondary">
-              {t}
-            </Badge>
-          ))}
-        </div>
+        <Badge variant="secondary" className="rounded-full">
+          Demo visual
+        </Badge>
       </div>
 
-      <div className="mt-10 grid gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2">
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">{data.title}</h1>
+        <p className="mt-2 text-muted-foreground">{data.subtitle}</p>
+      </div>
+
+      {/* Grid principal */}
+      <div className="grid gap-6 lg:grid-cols-3">
+        {/* Izquierda: descripción + funcionalidades + módulos */}
+        <div className="lg:col-span-2 space-y-6">
           {/* Funcionalidades */}
-          <Card>
+          <Card className="rounded-2xl">
             <CardHeader>
               <CardTitle>Funcionalidades</CardTitle>
+              <CardDescription>{data.description}</CardDescription>
             </CardHeader>
             <CardContent>
-              <ul className="list-disc space-y-2 pl-5 text-sm text-muted-foreground">
-                {item.features.map((f) => (
-                  <li key={f}>{f}</li>
+              <ul className="grid gap-3 text-sm">
+                {data.funcionalidades.map((f) => (
+                  <li key={f} className="flex items-start gap-2 text-muted-foreground">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0" />
+                    <span>{f}</span>
+                  </li>
                 ))}
               </ul>
             </CardContent>
           </Card>
 
-          {/* Vista previa (Screenshots) */}
-          <Card className="mt-6">
+          {/* Vista previa (SOLO UNA, sin mini preview) */}
+          <Card className="rounded-2xl">
             <CardHeader>
               <CardTitle>Vista previa</CardTitle>
+              <CardDescription>Captura real / demo visual para mostrar al cliente.</CardDescription>
             </CardHeader>
             <CardContent>
-              {item.screenshots?.length ? (
-                <div className="grid gap-4 sm:grid-cols-2">
-                  {item.screenshots.map((src) => (
-                    <div
-                      key={src}
-                      className="overflow-hidden rounded-lg border bg-muted"
-                    >
-                      <div className="relative aspect-video">
-                        <Image
-                          src={src}
-                          alt={`Vista previa - ${item.name}`}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 640px) 100vw, 50vw"
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-sm text-muted-foreground">
-                  Próximamente añadiremos capturas reales del sistema.
-                </p>
-              )}
+              <div className="overflow-hidden rounded-2xl border bg-muted/20">
+                <img
+                  src={data.image.src}
+                  alt={data.image.alt}
+                  className="h-auto w-full object-contain"
+                />
+              </div>
+
+              {/* Ayuda rápida si no carga */}
+              <p className="mt-3 text-xs text-muted-foreground">
+                Si no se ve: prueba abrir directamente <code className="px-1"> {data.image.src} </code> en el navegador.
+              </p>
             </CardContent>
           </Card>
 
           {/* Módulos */}
-          <Card className="mt-6">
+          <Card className="rounded-2xl">
             <CardHeader>
               <CardTitle>Módulos</CardTitle>
+              <CardDescription>Lo que normalmente incluye este sistema (ajustable por negocio).</CardDescription>
             </CardHeader>
             <CardContent>
-              {item.modules?.length ? (
-                <div className="grid gap-4 sm:grid-cols-2">
-                  {item.modules.map((m) => (
-                    <div key={m.title} className="rounded-lg border p-4">
-                      <p className="font-medium">{m.title}</p>
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        {m.desc}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-sm text-muted-foreground">
-                  Este sistema puede incluir módulos según tus necesidades.
-                </p>
-              )}
+              <div className="grid gap-4 md:grid-cols-2">
+                {data.modules.map((m) => (
+                  <div key={m.title} className="rounded-2xl border p-4">
+                    <div className="font-medium">{m.title}</div>
+                    <div className="mt-1 text-sm text-muted-foreground">{m.description}</div>
+                  </div>
+                ))}
+              </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* CTA */}
-        <div>
-          <Card className="sticky top-6">
+        {/* Derecha: CTA */}
+        <div className="space-y-6">
+          <Card className="rounded-2xl">
             <CardHeader>
               <CardTitle>¿Quieres este sistema?</CardTitle>
+              <CardDescription>
+                Lo adaptamos a tu negocio: logo, flujo, reportes, usuarios, permisos y más.
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              <p className="text-sm text-muted-foreground">
-                Lo adaptamos a tu negocio: logo, flujo, reportes, usuarios,
-                permisos y más.
-              </p>
-
-              <Button asChild className="w-full">
-                <a
-                  href={`https://wa.me/${
-                    siteConfig.links.whatsappNumber
-                  }?text=${encodeURIComponent(whatsappText)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Cotizar por WhatsApp
-                </a>
-              </Button>
-
-              <Button asChild variant="outline" className="w-full">
+              <Button className="w-full rounded-2xl">Cotizar por WhatsApp</Button>
+              <Button asChild variant="outline" className="w-full rounded-2xl">
                 <Link href="/">Volver al inicio</Link>
               </Button>
             </CardContent>
           </Card>
+
+          <Card className="rounded-2xl">
+            <CardHeader>
+              <CardTitle>Datos rápidos</CardTitle>
+              <CardDescription>Ideal para explicar al cliente.</CardDescription>
+            </CardHeader>
+            <CardContent className="grid gap-3 text-sm text-muted-foreground">
+              <div className="flex items-center justify-between rounded-xl border p-3">
+                <span>Tipo</span>
+                <span className="text-foreground">Demo visual</span>
+              </div>
+              <div className="flex items-center justify-between rounded-xl border p-3">
+                <span>Personalización</span>
+                <span className="text-foreground">Por módulos</span>
+              </div>
+              <div className="flex items-center justify-between rounded-xl border p-3">
+                <span>Soporte</span>
+                <span className="text-foreground">Mensual</span>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
-
-      {/* Contacto con contexto */}
-      <ContactSection context={item.name} />
     </main>
   );
 }
