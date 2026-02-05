@@ -1,17 +1,19 @@
-import type { Metadata } from 'next';
-import { siteConfig } from '@/lib/constants/site';
-import './globals.css';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
+// src/app/layout.tsx
+import "./globals.css";
+import type { Metadata } from "next";
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+import Header from "@/components/layout/header";
+import Footer from "@/components/layout/footer";
+
+export const metadata: Metadata = {
+  title: "AsencX",
+  description: "Sistemas web a medida para negocios: POS, inventario y supervisión.",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body>
+      <body className="min-h-screen bg-background text-foreground antialiased">
         <Header />
         {children}
         <Footer />
