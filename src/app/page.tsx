@@ -257,7 +257,7 @@ export default function Page() {
 
             {/* Ver ejemplos -> scroll a #sistemas */}
             <Button variant="outline" className="rounded-2xl" asChild>
-              <a href="#sistemas">Ver ejemplos</a>
+              <Link href="/rubros">Ver ejemplos</Link>
             </Button>
           </div>
 
