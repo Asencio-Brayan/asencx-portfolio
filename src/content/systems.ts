@@ -56,7 +56,7 @@ export const systems: SystemCard[] = [
     desc: "Entradas/salidas, alertas, kardex y control por almacén.",
     bullets: ["Stock mínimo y alertas", "Importación de productos", "Historial y auditoría"],
     href: "/proyectos/tienda-inventario",
-    image: "/projets/tienda-Inventario/1.1.png",
+    image: "/projets/tienda-inventario/1.1.png",
     imageAlt: "Inventario (demo)",
   },
   {
@@ -140,7 +140,7 @@ export const PROJECTS: Record<string, ProjectData> = {
       { title: "Almacenes", description: "Control por almacén/sucursal." },
     ],
     whatsappText: "Hola AsencX, quiero cotizar el Sistema de Inventario.",
-    image: { src: "/projets/tienda-Inventario/1.1.png", alt: "Vista previa Inventario" },
+    image: { src: "/projets/tienda-inventario/1.1.png", alt: "Vista previa Inventario" },
   },
 
   "panel-supervisor": {
